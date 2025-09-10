@@ -42,3 +42,9 @@ ol li:nth-child(3) {
     font-weight: bold;
     color: deeppink;
 }
+
+/* 마우스 오버 가상 클래스 */
+li:hover {
+    font-weight: bold;
+    color: blue;
+}
