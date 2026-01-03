@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 1: 웹 매뉴얼 기초 | CloudDocs</title>
+    
+    <!-- 
+    ═══════════════════════════════════════════════════════════════
+    📚 LEVEL 1: GCP 스타일 웹 매뉴얼 - HTML/CSS 기초
+    ═══════════════════════════════════════════════════════════════
+    
+    🎯 학습 목표:
+    - 문서 사이트의 기본 레이아웃 구조
+    - CSS 변수(Custom Properties) 사용법
+    - 시맨틱 HTML 태그 (header, nav, main, aside)
+    - Flexbox로 레이아웃 잡기
+    - 타이포그래피와 가독성
+    
+    💡 연습 과제:
+    1. 색상 테마를 바꿔보세요 (CSS 변수 수정)
+    2. 사이드바 메뉴 항목을 추가해보세요
+    3. 본문에 새로운 섹션을 추가해보세요
+    4. 코드 블록 스타일을 커스터마이징해보세요
+    ═══════════════════════════════════════════════════════════════
+    -->
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ═══════════════════════════════════════
+           CSS 변수 (테마 색상)
+           - 한 곳에서 색상을 관리할 수 있어요
+           ═══════════════════════════════════════ */
+        :root {
+            /* 브랜드 색상 */
+            --primary-blue: #1a73e8;
+            --primary-blue-hover: #1557b0;
+            
+            /* 텍스트 색상 */
+            --text-primary: #202124;
+            --text-secondary: #5f6368;
+            --text-link: #1a73e8;
+            
+            /* 배경 색상 */
+            --bg-white: #ffffff;
+            --bg-gray: #f8f9fa;
+            --bg-code: #f1f3f4;
+            
+            /* 테두리 색상 */
+            --border-light: #dadce0;
+            --border-focus: #1a73e8;
+            
+            /* 레이아웃 크기 */
+            --header-height: 64px;
+            --sidebar-width: 280px;
+            --content-max-width: 900px;
+        }
+        
+        /* ═══════════════════════════════════════
+           기본 리셋
+           ═══════════════════════════════════════ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;    /* 부드러운 스크롤 */
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', 'Google Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--bg-white);
+        }
+        
+        /* ═══════════════════════════════════════
+           상단 헤더 (고정)
+           ═══════════════════════════════════════ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 100;
+            
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4285f4, #34a853, #fbbc05, #ea4335);
+            border-radius: 8px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .logo-text span {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        /* 헤더 검색창 */
+        .header-search {
+            margin-left: 40px;
+            flex: 1;
+            max-width: 720px;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--bg-gray);
+            border-radius: 8px;
+            padding: 0 16px;
+            height: 48px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .search-box:focus-within {
+            background: var(--bg-white);
+            border-color: var(--border-focus);
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.1);
+        }
+        
+        .search-icon {
+            color: var(--text-secondary);
+            margin-right: 12px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            border: none;
+            background: none;
+            font-size: 16px;
+            outline: none;
+            color: var(--text-primary);
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        /* ═══════════════════════════════════════
+           메인 레이아웃
+           ═══════════════════════════════════════ */
+        .main-layout {
+            display: flex;
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height));
+        }
+        
+        /* ═══════════════════════════════════════
+           사이드바 네비게이션
+           ═══════════════════════════════════════ */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-white);
+            border-right: 1px solid var(--border-light);
+            padding: 24px 0;
+            
+            /* 스크롤 시 고정 */
+            position: sticky;
+            top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+            overflow-y: auto;
+        }
+        
+        .nav-section {
+            margin-bottom: 24px;
+        }
+        
+        .nav-title {
+            padding: 8px 24px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-list {
+            list-style: none;
+        }
+        
+        .nav-item a {
+            display: block;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+        }
+        
+        .nav-item a:hover {
+            color: var(--text-primary);
+            background: var(--bg-gray);
+        }
+        
+        .nav-item.active a {
+            color: var(--primary-blue);
+            background: rgba(26, 115, 232, 0.08);
+            border-left-color: var(--primary-blue);
+            font-weight: 500;
+        }
+        
+        /* ═══════════════════════════════════════
+           본문 콘텐츠
+           ═══════════════════════════════════════ */
+        .content {
+            flex: 1;
+            padding: 40px 48px;
+            max-width: var(--content-max-width);
+        }
+        
+        /* 브레드크럼 */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .breadcrumb a {
+            color: var(--text-link);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 제목 */
+        .content h1 {
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+        
+        .content h2 {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-top: 48px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .content h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+        
+        /* 본문 텍스트 */
+        .content p {
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .content a {
+            color: var(--text-link);
+            text-decoration: none;
+        }
+        
+        .content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 리스트 */
+        .content ul,
+        .content ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+        
+        .content li {
+            margin-bottom: 8px;
+        }
+        
+        /* 코드 블록 */
+        .code-block {
+            background: var(--bg-code);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        
+        /* 인라인 코드 */
+        code {
+            font-family: 'Roboto Mono', monospace;
+            background: var(--bg-code);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        /* 알림 박스 */
+        .note {
+            background: #e8f0fe;
+            border-left: 4px solid var(--primary-blue);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0;
+        }
+        
+        .note-title {
+            font-weight: 500;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .note p {
+            margin: 0;
+            color: var(--text-primary);
+        }
+        
+        /* 경고 박스 */
+        .warning {
+            background: #fef7e0;
+            border-left: 4px solid #f9ab00;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 24px 0;
+        }
+        
+        .warning .note-title {
+            color: #e37400;
+        }
+        
+        /* 표 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        th {
+            background: var(--bg-gray);
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        tr:hover {
+            background: var(--bg-gray);
+        }
+        
+        /* ═══════════════════════════════════════
+           페이지 하단 네비게이션
+           ═══════════════════════════════════════ */
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .page-nav-link {
+            display: flex;
+            flex-direction: column;
+            padding: 16px 20px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            text-decoration: none;
+            max-width: 280px;
+            transition: all 0.2s;
+        }
+        
+        .page-nav-link:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 1px 6px rgba(26, 115, 232, 0.2);
+        }
+        
+        .page-nav-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        
+        .page-nav-title {
+            font-size: 14px;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+        
+        .page-nav-link.next {
+            text-align: right;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 상단 헤더 -->
+    <header class="header">
+        <a href="#" class="logo">
+            <div class="logo-icon"></div>
+            <div class="logo-text">CloudDocs <span>Documentation</span></div>
+        </a>
+        
+        <div class="header-search">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="문서 검색...">
+            </div>
+        </div>
+    </header>
+    
+    <!-- 메인 레이아웃 -->
+    <div class="main-layout">
+        
+        <!-- 사이드바 -->
+        <nav class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">시작하기</div>
+                <ul class="nav-list">
+                    <li class="nav-item active"><a href="#">개요</a></li>
+                    <li class="nav-item"><a href="#">빠른 시작</a></li>
+                    <li class="nav-item"><a href="#">설치 가이드</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">기본 개념</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#">아키텍처</a></li>
+                    <li class="nav-item"><a href="#">리소스 관리</a></li>
+                    <li class="nav-item"><a href="#">프로젝트 설정</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">가이드</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#">배포하기</a></li>
+                    <li class="nav-item"><a href="#">모니터링</a></li>
+                    <li class="nav-item"><a href="#">보안 설정</a></li>
+                    <li class="nav-item"><a href="#">문제 해결</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">레퍼런스</div>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#">API 문서</a></li>
+                    <li class="nav-item"><a href="#">CLI 명령어</a></li>
+                    <li class="nav-item"><a href="#">설정 옵션</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- 본문 콘텐츠 -->
+        <main class="content">
+            
+            <!-- 브레드크럼 -->
+            <div class="breadcrumb">
+                <a href="#">CloudDocs</a>
+                <span>›</span>
+                <a href="#">시작하기</a>
+                <span>›</span>
+                <span>개요</span>
+            </div>
+            
+            <h1>CloudDocs 개요</h1>
+            
+            <p>
+                이 문서는 CloudDocs 플랫폼의 전반적인 구조와 기능을 설명합니다. 
+                CloudDocs를 처음 사용하시는 분들을 위해 핵심 개념과 시작하는 방법을 안내합니다.
+            </p>
+            
+            <div class="note">
+                <div class="note-title">💡 참고</div>
+                <p>신규 사용자는 <a href="#">빠른 시작 가이드</a>를 먼저 읽어보시는 것을 권장합니다.</p>
+            </div>
+            
+            <h2>주요 기능</h2>
+            
+            <p>CloudDocs는 다음과 같은 핵심 기능을 제공합니다:</p>
+            
+            <ul>
+                <li><strong>자동 배포</strong> - Git 저장소와 연동하여 자동으로 배포합니다</li>
+                <li><strong>확장성</strong> - 트래픽에 따라 자동으로 스케일링됩니다</li>
+                <li><strong>모니터링</strong> - 실시간 메트릭과 로그를 확인할 수 있습니다</li>
+                <li><strong>보안</strong> - SSL 인증서가 자동으로 적용됩니다</li>
+            </ul>
+            
+            <h2>시스템 요구사항</h2>
+            
+            <p>CloudDocs를 사용하기 위한 최소 요구사항입니다:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>항목</th>
+                        <th>최소 사양</th>
+                        <th>권장 사양</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>운영체제</td>
+                        <td>Linux, macOS, Windows 10+</td>
+                        <td>Ubuntu 22.04 LTS</td>
+                    </tr>
+                    <tr>
+                        <td>Node.js</td>
+                        <td>18.0 이상</td>
+                        <td>20.0 LTS</td>
+                    </tr>
+                    <tr>
+                        <td>메모리</td>
+                        <td>512MB</td>
+                        <td>2GB 이상</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>CLI 설치</h2>
+            
+            <p>CloudDocs CLI를 설치하려면 다음 명령어를 실행하세요:</p>
+            
+            <div class="code-block">
+                <code>npm install -g @clouddocs/cli</code>
+            </div>
+            
+            <p>설치가 완료되면 버전을 확인합니다:</p>
+            
+            <div class="code-block">
+                <code>clouddocs --version</code>
+            </div>
+            
+            <h3>첫 프로젝트 만들기</h3>
+            
+            <p>새 프로젝트를 생성하려면 <code>init</code> 명령어를 사용합니다:</p>
+            
+            <div class="code-block">
+                <code>clouddocs init my-project<br>cd my-project<br>clouddocs deploy</code>
+            </div>
+            
+            <div class="warning">
+                <div class="note-title">⚠️ 주의</div>
+                <p>프로젝트 이름은 영문 소문자와 하이픈(-)만 사용할 수 있습니다.</p>
+            </div>
+            
+            <h2>다음 단계</h2>
+            
+            <p>개요를 읽으셨다면, 다음 문서들을 참고하세요:</p>
+            
+            <ul>
+                <li><a href="#">빠른 시작</a> - 5분 만에 첫 앱 배포하기</li>
+                <li><a href="#">아키텍처</a> - CloudDocs의 내부 구조 이해하기</li>
+                <li><a href="#">API 문서</a> - REST API 레퍼런스</li>
+            </ul>
+            
+            <!-- 페이지 네비게이션 -->
+            <div class="page-nav">
+                <a href="#" class="page-nav-link prev">
+                    <span class="page-nav-label">← 이전</span>
+                    <span class="page-nav-title">소개</span>
+                </a>
+                <a href="#" class="page-nav-link next">
+                    <span class="page-nav-label">다음 →</span>
+                    <span class="page-nav-title">빠른 시작</span>
+                </a>
+            </div>
+            
+        </main>
+    </div>
+    
+</body>
+</html>
