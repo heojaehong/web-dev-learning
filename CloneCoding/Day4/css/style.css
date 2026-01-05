@@ -1,120 +1,143 @@
 /* CSS 변수 - 한 곳에서 색상 관리 */
 
 :root {
-    /* 브랜드 색상 */
-    --primary-blue: #1a73e8;
-    --primary-blue-hover: #1557b0;
+  /* 브랜드 색상 */
+  --primary-blue: #1a73e8;
+  --primary-blue-hover: #1557b0;
 
-    /* 텍스트 색상 */
-    --text-primary: #202124;
-    --text-secondary: #5f6368;
-    --text-link: #1a73e8;
+  /* 텍스트 색상 */
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
+  --text-link: #1a73e8;
 
-    /* 배경 색상 */
-    --bg-white: #ffffff;
-    --bg-gray: #f8f9fa;
-    --bg-code: #f1f3f4;
+  /* 배경 색상 */
+  --bg-white: #ffffff;
+  --bg-gray: #f8f9fa;
+  --bg-code: #f1f3f4;
 
-    /* 테두리 색상 */
-    --border-light: #dadce0;
-    --border-focus: #1a73e8;
+  /* 테두리 색상 */
+  --border-light: #dadce0;
+  --border-focus: #1a73e8;
 
-    /* 레이아웃 크기 */
-    --header-height: 64px;
-    --sidebar-width: 280px;
-    --content-max-width: 900px;
+  /* 레이아웃 크기 */
+  --header-height: 64px;
+  --sidebar-width: 280px;
+  --content-max-width: 900px;
 }
-
 
 /* 기본 리셋 */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--text-primary);
-    background: var(--bg-white);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--bg-white);
 }
 
 /* 상단 헤더 (고정) */
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--header-height);
-    border-bottom: 1px solid var(--border-light);
-    z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  border-bottom: 1px solid var(--border-light);
+  z-index: 100;
 
-    display: flex;
-    align-items: center;
-    padding: 0 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #4285f4, #34a853, #fbbc05, #ea4335);
-    border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #4285f4, #34a853, #fbbc05, #ea4335);
+  border-radius: 8px;
 }
 
 .logo-text {
-    font-size: 20px;
-    font-weight: 500;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .logo-text span {
-    color: var(--text-secondary);
-    font-weight: 400;
+  color: var(--text-secondary);
+  font-weight: 400;
 }
 
 /* 헤더 검색창 */
 .header-search {
-    margin-left: 40px;
-    flex: 1;
-    max-width: 720px;
+  margin-left: 40px;
+  flex: 1;
+  max-width: 720px;
 }
 
 .search-box {
-    display: flex;
-    align-items: center;
-    background: var(--bg-gray);
-    border-radius: 8px;
-    padding: 0 16px;
-    height: 48px;
-    border: 1px solid transparent;
-    transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  background: var(--bg-gray);
+  border-radius: 8px;
+  padding: 0 16px;
+  height: 48px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
 }
 
 .search-box:focus-within {
-    background: var(--bg-white);
-    border-color: var(--border-focus);
-    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.1);
+  background: var(--bg-white);
+  border-color: var(--border-focus);
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.1);
 }
 
 .search-icon {
-    color: var(--text-secondary);
-    margin-right: 12px;
+  color: var(--text-secondary);
+  margin-right: 12px;
 }
 
 .search-box input {
-    flex: 1;
-    border: none;
-    background: none;
-    font-size: 16px;
-    outline: none;
-    color: var(--text-primary);
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 16px;
+  outline: none;
+  color: var(--text-primary);
+}
+
+/* 메인 레이아웃 */
+.main-layout {
+  display: flex;
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-white);
+  border-right: 1px solid var(--border-light);
+  padding: 24px 0;
+
+  /* 스크롤 시 고정 */
+  position: sticky;
+  top: var(--header-height);
+  height: calc(100vh - var(--height-height));
+  overflow-y: auto;
+}
+
+.nav-section {
+  margin-bottom: 24px;
 }
