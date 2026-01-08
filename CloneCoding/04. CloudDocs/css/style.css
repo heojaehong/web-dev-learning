@@ -284,3 +284,58 @@ tr:hover {
   display: block;
   white-space: nowrap; 
 } */
+
+/* 경고 박스 */
+.warning {
+  background-color: #fef7e0;
+  border-left: 4px solid #f9ab00;
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin: 24px 0;
+}
+
+.warning .note-title {
+  color: #e37400;
+}
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-light);
+}
+
+.page-nav-link {
+  /* background-color: orange; */
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  text-decoration: none;
+  max-width: 280px;
+  transition: all 0.2s;
+}
+
+.page-nav-link:hover {
+  border-color: var(--primary-blue);
+  box-shadow: 0 1px 6px rgba(26, 115, 232, 0.2);
+}
+
+.page-nav-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.page-nav-title {
+  font-size: 14px;
+  color: var(--primary-blue);
+  font-weight: 500;
+}
+
+.page-nav-link.next {
+  text-align: right;
+  margin-left: auto;
+}
