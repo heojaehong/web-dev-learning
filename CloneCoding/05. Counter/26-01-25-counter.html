@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+</head>
+<body>
+    <h1 id="number">0</h1>
+    <button id="plus">+</button>
+    <button id="minus">-</button>
+
+    <script>
+        let count = 0;
+
+        document.querySelector('#plus').onclick = function() {
+            count = count + 1;
+            document.querySelector('#number').textContent = count;
+        };
+
+        document.querySelector('#minus').onclick = function() {
+            count = count - 1;
+            document.querySelector('#number').textContent = count;
+        };
+    </script>
+</body>
+</html>
