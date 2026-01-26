@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>덧셈 계산기</button>
+    <input type="number" id="num1">
+    <input type="number" id="num2">
+    <h1 id="result"></h1>
+
+    <script>
+        document.querySelector('button').onclick = () => {
+            let num1 = Number(document.querySelector('#num1').value);
+            let num2 = Number(document.querySelector('#num2').value);
+            document.querySelector('#result').textContent = `두 수의 합은 ${num1 + num2} 입니다.`;
+        };
+    </script>
+
+</body>
+
+</html>
