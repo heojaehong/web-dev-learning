@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea name="textbox" id="textbox1"></textarea>
+    <h1 id="count"></h1>
+
+    <script>
+        document.querySelector('textarea').oninput = () => {
+            let text = document.querySelector('textarea').value;
+            document.querySelector('#count').textContent = text.length + '글자';
+        };
+    </script>
+</body>
+
+</html>
