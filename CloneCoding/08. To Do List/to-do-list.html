@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📝 나의 할 일 목록</h1>
+
+        <div class="input-area">
+            <input type="text" id="todo-input" placeholder="할 일을 입력하세요.">
+            <button id="add-btn">추가</button>
+        </div>
+
+        <ul id="todo-list">
+            <li class="empty-message">할 일을 추가해보세요!</li>
+        </ul>
+
+    </div>
+
+
+    <script>
+        // 1. 요소 선택하기
+        const todoInput = document.getElementById('todo-input');
+        const addBtn = document.getElementById('add-btn');
+        const todoList = document.getElementById('todo-list');
+
+        // 2. 할 일 추가 함수
+        function addTodo() {
+            // 입력값 가져오기 (앞뒤 공백 제거)
+            const todoText = todoInput.value.trim();
+            console.log(todoText);
+
+            // 빈 입력 체크
+            if (todoText === '') {
+                alert('할 일을 입력해주세요!');
+                return;
+            }
+
+            // 할 일이 추가되었을 때,"할 일을 추가해보세요!" 메시지 제거
+            const emptyMessage = todoList.querySelector('.empty-message');
+            if (emptyMessage) {
+                emptyMessage.remove();
+            }
+
+            // 새로운 할 일 요소 만들기
+            const li = document.createElement('li');
+            li.className = 'todo-item';
+
+            // 할 일 내용 span
+            const span = document.createElement('span');
+            span.className = 'todo-text';
+            span.textContent = todoText;
+
+            // 삭제 버튼
+
+
+            // 요소들 조립
+            li.appendChild(span);
+            todoList.appendChild(li);
+
+            // 입력창 비우기
+            todoInput.value = '';
+            todoInput.focus();
+        }
+
+
+        // 3. 이벤트 리스너 등록
+
+        // 추가 버튼 클릭
+        addBtn.addEventListener('click', addTodo);
+
+        // Enter 키 입력
+
+
+        // 할 일 목록 클릭 이벤트 (이벤트 위임)
+        todoList.addEventListener('click', function (e) {
+            const target = e.target;
+        });
+
+    </script>
+
+</body>
+
+</html>
