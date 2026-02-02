@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>Click Me!</button>
+    <h1></h1>
+
+    <script>
+        let quotes = ['노력은 배신하지 않는다', '갈수록 태산', '가는 말이 고와야 오는 말이 곱다'];
+
+        document.querySelector('button').onclick = () => {
+            let random = Math.floor(Math.random() * quotes.length);
+            document.querySelector('h1').textContent = quotes[random];
+        }
+    </script>
+
+</body>
+
+</html>
