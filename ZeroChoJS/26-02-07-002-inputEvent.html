@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어: <span id="word"></span></div>
+    <input type="text">
+    <button>입력</button>
+
+    <script>
+        // Click 이벤트
+        const onClickButton = () => {
+            console.log('버튼 클릭');
+        };
+        const $button = document.querySelector('button');
+        $button.addEventListener('click', onClickButton);
+
+        // Input 이벤트
+        const onInput = (e) => {
+            console.log('글자 입력', e.target.value);
+        };
+        const $input = document.querySelector('input');
+        $input.addEventListener('input', onInput);
+    </script>
+</body>
+</html>
